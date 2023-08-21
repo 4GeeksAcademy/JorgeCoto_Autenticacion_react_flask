@@ -1,6 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy_serializer import SerializerMixin
+
 
 db = SQLAlchemy()
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,3 +20,9 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+
+class TokenBlockedList(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(1000), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False)
